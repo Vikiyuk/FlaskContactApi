@@ -249,7 +249,7 @@ def create_contact():
         "phone": phone
     }
     current_id += 1
-    return jsonify({"message": "New record added", "contact": master[current_id - 1]}), 201
+    return jsonify({"message": "New record crated:", "contact": master[current_id - 1]}), 201
 
 
 @app.route('/delete_contact/<int:id>', methods=['DELETE'])
@@ -258,21 +258,20 @@ def delete_contact(id):
         return jsonify({"error": "The contact you are searching for does not exist"}), 404
 
     deleted_contact = master.pop(id)
-    return jsonify({"message": "Deleting", "contact": deleted_contact}), 200
+    return jsonify({"message": "Deleting:", "contact": deleted_contact}), 200
 
 
 @app.route('/update_contact/<int:id>', methods=['PUT'])
 def update_contact(id):
     if id not in master:
-        return jsonify({"error": "The contact you are searching for does not exist"}), 404
+        return jsonify({"error": "The contact does not exist"}), 404
     name = request.args.get('name')
     phone = request.args.get('phone')
     if name:
         master[id]["name"] = name
     if phone:
         master[id]["phone"] = phone
-
-    return jsonify({"message": "Updated", "contact": master[id]}), 200
+    return jsonify({"message": "Updated:", "contact": master[id]}), 200
 
 
 if __name__ == '__main__':
