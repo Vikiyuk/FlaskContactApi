@@ -226,7 +226,11 @@ http://127.0.0.1:5000/delete_user/1/'</code>
 #         return {"error": "Cannot delete: user not found."}
 master = {}
 current_id = 1
-
+def searchContact(phonenum):
+    for contact in master.values():
+        if contact["phone"] == phonenum:
+            return True
+    return False
 
 @app.route('/contacts', methods=['GET'])
 def display_contacts():
@@ -238,7 +242,7 @@ def create_contact():
     global current_id
     name = request.args.get('name')
     phone = request.args.get('phone')
-    if any(contact["phone"] == phone for contact in master.values()):
+    if searchContact(phone):
         return jsonify({"error": "Contact already exists"}), 400
     master[current_id] = {
         "name": name.upper(),
